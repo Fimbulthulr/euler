@@ -1,0 +1,15 @@
+[
+    {
+        "arguments": [
+            "clang",
+            "-c",
+            "-O3",
+            "-Wall",
+            "-o",
+            "obj/main.o",
+            "src/main.c"
+        ],
+        "directory": "/home/freyja/euler/15",
+        "file": "src/main.c"
+    }
+]

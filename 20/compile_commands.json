@@ -1,0 +1,16 @@
+[
+    {
+        "arguments": [
+            "clang",
+            "-c",
+            "-O3",
+            "-Wall",
+            "-Iinc",
+            "-o",
+            "obj/segmented_factorial.o",
+            "src/segmented_factorial.c"
+        ],
+        "directory": "/home/freyja/euler/20",
+        "file": "src/segmented_factorial.c"
+    }
+]
