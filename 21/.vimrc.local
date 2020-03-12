@@ -1,0 +1,11 @@
+"local vimrc overwrite
+augroup project
+	autocmd!
+	autocmd BufRead,BufNewFile *.h,*.c set filetype=c.doxygen
+augroup END
+set noexpandtab
+let &path.="inc"
+set makeprg=make\ -C\ /home/freyja/euler/21
+nnoremap <F4> :make!<cr>
+nnoremap <F5> :!/home/freyja/euler/21/21<cr>
+autocmd vimenter * call OpenNerdTree()
