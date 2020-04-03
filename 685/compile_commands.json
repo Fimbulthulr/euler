@@ -1,0 +1,34 @@
+[
+    {
+        "arguments": [
+            "clang",
+            "-c",
+            "-O3",
+            "-Wall",
+            "-g",
+            "-Iinc",
+            "-I./inc",
+            "-o",
+            "obj/fibonacci.o",
+            "src/fibonacci.c"
+        ],
+        "directory": "/home/freyja/euler/685",
+        "file": "src/fibonacci.c"
+    },
+    {
+        "arguments": [
+            "clang",
+            "-c",
+            "-O3",
+            "-Wall",
+            "-g",
+            "-Iinc",
+            "-I./inc",
+            "-o",
+            "obj/main.o",
+            "src/main.c"
+        ],
+        "directory": "/home/freyja/euler/685",
+        "file": "src/main.c"
+    }
+]
