@@ -2,7 +2,7 @@ CFLAGS = -O3 -Wall -g -fopenmp
 COMPILER := clang 
 LINK := -g -fopenmp
 INCLUDE_OPTIONS := -I./inc
-TARGET := 685
+TARGET := 684
 
 SRC_DIR = src
 OBJ_DIR = obj
