@@ -45,10 +45,8 @@ main
 			uint64_t tmp= inv_digit_sum(fib[i]);
 			sum += tmp;
 			sum %= p;
-			printf("%" PRIu64 "\n\n", tmp);
 		}
 	
 	printf("\n%" PRIu64 "\n", sum);
 	 
-	printf("\n%" PRIu64 "\n", inv_digit_sum(20));
 }

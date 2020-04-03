@@ -52,11 +52,13 @@ inv_digit_sum
 		r *= r_l;
 		r %= p;
 	}
+	r += p;
 	if(n > 8)
 	{
 		r -= 6;
 	}
-	return (r-n)%p;
+	r -= n%p;
+	return r%p;
 	
 }
 
