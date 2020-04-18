@@ -1,6 +1,6 @@
 CFLAGS =  -Wall -g
 COMPILER := clang 
-LINK := -g
+LINK := -g -lgmp
 INCLUDE_OPTIONS := -I./inc
 TARGET := 152
 

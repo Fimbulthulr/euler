@@ -18,86 +18,79 @@
 
 #include"count_combinations.h"
 #include<stdlib.h>
+#include<stdio.h>
 
-#define N_DEBUG 7
+#define N_PROGRESS 16
+uint64_t progress;
 
 uint64_t
 count_combinations_recursive
-	(double number,
-	 uint64_t n_min,
-	 uint64_t n_max,
-	 double tol,
-	 double* sums);
+	(uint64_t n,
+	 mpq_t z,
+	 mpq_t *sums);
 
 uint64_t
 count_combinations
-	(double number,
+	(mpq_t z,
 	 uint64_t n_min,
-	 uint64_t n_max,
-	 double tol)
+	 uint64_t n_max)
 {
-	double *sums = calloc(n_max + 1, sizeof(double));
-	sums[0] = 0;
+	mpq_t *sums = calloc(n_max + 2, sizeof(mpq_t));
+	for(size_t i = 0; i < n_max + 2; ++i)
+	{
+		mpq_init(sums[i]);
+	}
+	
 	for(size_t i = 1; i <= n_max; ++i)
 	{
-		sums[i] = sums[i-1] + (double) 1/ ( (double) i*(double) i);
+		mpq_set_ui(sums[i], 1, i*i);
+		mpq_add(sums[i], sums[i], sums[i-1]);
 	}
-	for(size_t i = 0; i <= n_max; ++i)
+	mpq_set(sums[n_max + 1], sums[n_max]);
+
+	for ( size_t i = n_max; i ; --i ) {
+		mpq_sub(sums[i], sums[n_max + 1], sums[i-1]);
+	}
+	mpq_set_ui(sums[n_max + 1], 0, 1);
+	progress = 0;
+	uint64_t count = count_combinations_recursive(n_min, z, sums);	
+	for(size_t i = 0; i < n_max+2; ++i)
 	{
-		sums[i] = sums[n_max] - sums[i] ;
-		printf("%f\n", sums[i]);
+		mpq_clear(sums[i]);
 	}
-	uint64_t count = count_combinations_recursive(number, n_min, n_max, tol, sums);
 	free(sums);
 	return count;
 }
 
 uint64_t
 count_combinations_recursive
-	(double number,
-	 uint64_t n_min,
-	 uint64_t n_max,
-	 double tol,
-	 double* sums)
+	(uint64_t n,
+	 mpq_t z,
+	 mpq_t *sums)
 {
-	if(n_min > n_max)
+	if(n == N_PROGRESS)
 	{
-		return 0;
+		printf("progress: %f%%\n", 100*(double) (progress++) / ( (double) (1<< (N_PROGRESS-2))));
 	}
-	if(number > sums[n_min])
-	{
-		return 0;
-	}
-	if(number < tol)
+	mpq_set_ui(sums[0], 0, 1);
+	if(mpq_equal(sums[0], z))			//has reached a sum, end
 	{
 		return 1;
-		printf("%f %zu %zu\n", number, n_min, n_max);
-
+	}
+	if(mpq_cmp(z, sums[n]) > 0)			//can no longer complete the sum, cut recursion -> also at max depth
+	{
+		return 0;
 	}
 	uint64_t count = 0;
-	double n = n_min;
-	if(n_min == N_DEBUG)
+	count += count_combinations_recursive(n+1, z, sums);
+
+	mpq_set_ui(sums[0], 1, n*n);
+	if(mpq_cmp(z, sums[0]) >= 0)
 	{
-		
-		printf("count = %zu\n", count);
-	}
-	if(number > 1/(n*n))
-	{
-		count += count_combinations_recursive(number - 1/(n*n), n_min + 1, n_max, tol, sums);
-	}
-	if(n_min == N_DEBUG)
-	{
-		
-		printf("count = %zu\n", count);
-	}
-	if(number > tol)
-	{
-		count += count_combinations_recursive(number, n_min + 1, n_max, tol, sums);
-	}
-	if(n_min == N_DEBUG)
-	{
-		
-		printf("count = %zu\n", count);
+		mpq_sub(z, z, sums[0]);			//decrement z for second subtree
+		count += count_combinations_recursive(n+1, z, sums);
+		mpq_set_ui(sums[0], 1, n*n);	//reset z to preserve value
+		mpq_add(z, z, sums[0]);
 	}
 	return count;
 }

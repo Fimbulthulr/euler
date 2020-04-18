@@ -20,13 +20,13 @@
  */
 
 #include<stdint.h>
+#include<gmp.h>
 
 
 uint64_t
 count_combinations
-	(double number,
+	(mpq_t z,
 	 uint64_t n_min,
-	 uint64_t n_max,
-	 double tol);
+	 uint64_t n_max);
 
 #endif /* COUNT_COMBINATIONS_H */

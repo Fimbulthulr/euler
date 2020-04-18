@@ -22,7 +22,7 @@
 #include"count_combinations.h"
 
 #define N 80
-#define TOL 1e-6
+#define TOL 1e-13
 int
 main
 	(int argc,
@@ -38,7 +38,11 @@ main
 		n = atoi(argv[1]);
 	}
 
-	uint64_t comb = count_combinations(0.25, 3, n, TOL);
+	mpq_t z;
+	mpq_init(z);
+	mpq_set_ui(z, 1, 2);
+	uint64_t comb = count_combinations(z, 2, n);
+	mpq_clear(z);
 
 	printf("There are %" PRIu64 " possible combinations to construct 0.5 as the  sum the inverse squares of 2 to %" PRIu64 "\n", comb, n);
 }
